@@ -29,6 +29,11 @@ Changes are not persisted!
 `kubectl run nginx --image=nginx`
 ##### Create pod definition file
 `kubectl run podName --image=dockerContainerName --dry-run=client -o yaml > pod-definition.yml`
+##### options for run/create
+- `--name=nginx-pod`
+- `--image=nginx:alpine`
+- `--labels=tier=db`
+
 
 #### Replicaset:
 ##### Show the running replica-sets: name, desired, current, age
@@ -56,3 +61,6 @@ Changes are not persisted!
 `kubectl get services`
 ##### Get url with minikube
 `minikube service myapp-service --url`
+##### options for run/create
+- `--port 6379`
+- `--target-port 6379`
