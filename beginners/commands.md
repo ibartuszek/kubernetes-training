@@ -1,5 +1,7 @@
 ##### Show all created kubernetes elements
 `kubectl get all`
+##### Show all element from all namespace
+`kubectl get {element} --all-namspaces`
 ##### Show yaml definition of the kubernetes element
 `kubectl get ${element} -o yaml`
 ##### Show detailed information about the kubernetes element
@@ -32,8 +34,10 @@ Changes are not persisted!
 ##### options for run/create
 - `--name=nginx-pod`
 - `--image=nginx:alpine`
+- `--port 8080` --> container targetPort
 - `--labels=tier=db`
-
+- `--namespace=dev`
+-- `expose`
 
 #### Replicaset:
 ##### Show the running replica-sets: name, desired, current, age
