@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  namespace: dev
+  labels:
+    app: myapp
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 8080
+      # overrides docker entrypoint
+      command: ["python", "app.py"]
+      # overrides docker command
+      args: ["--color", "pink"]
+      # environment variables one-by-one
+      env:
+        - name: APP_COLOR
+          value: pink
+        - name: VALUE_FROM_CONFIG_MAP
+          valueFrom:
+            configMapKeyRef:
+              key: app-config
+        - name: VALUE_FROM_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: app-secret
+      # All environment variables from config-map
+      envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret
+      securityContext:
+        # root user
+        runAsUser: 1000
+        capabilities:
+          add: ["MAC_ADMIN"]
+      resources:
+        requests:
+          memory: 1Gi
+          cpu: 1
+        limits:
+          memory: 2Gi
+          cpu: 2
+  serviceAccountName: my-service-account
+  tolerations:
+    - key: app
+      operator: Equal
+      value: blue
+      effect: NoSchedule
+  # limited solution
+  nodeSelector:
+    size: Large
+  # same as nodeSelector
+  affinity:
+    nodeAffinity:
+      # If there is no available nod during the pod creation the scheduler ignores the affinity
+      # preferredDuringSchedulingIgnoredDuringExecution:
+      # If there is no available nod during the pod creation it remains pending
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: size
+                # NotIn, Exists, ...
+                operator: In
+                values:
+                  - Large
