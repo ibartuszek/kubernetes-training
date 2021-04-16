@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: math-add-job
+spec:
+  # how many times should be the job successfully completed - sequential execution
+  completions: 3
+  # the same but pods created parallel
+  parallelism: 3
+  backoffLimit: 3
+  template:
+    spec:
+      containers:
+        - name: math-add
+          image: ubuntu
+          command: [ 'expr', '3', '+', '2' ]
+      restartPolicy: Never
+
+# To see the console:
+# kubectl logs math-add-job
