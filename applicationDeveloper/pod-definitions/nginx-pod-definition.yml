@@ -45,6 +45,19 @@ spec:
         limits:
           memory: 2Gi
           cpu: 2
+      volumeMounts:
+        - mountPath: /var/log/event-simulator/
+          name: log-volume
+      readinessProbe:
+        httpGet:
+          port: 9080
+          path: /actuator/health/readiness
+      livenessProbe:
+        periodSeconds: 1
+        initialDelaySeconds: 80
+        httpGet:
+          port: 9080
+          path: /actuator/health/liveness
   serviceAccountName: my-service-account
   tolerations:
     - key: app
