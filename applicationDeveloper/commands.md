@@ -89,3 +89,18 @@ kubectl create secret <secret-name> --from-file=app_secret.properties
 
 ###### Run custom command on pod
 `kubectl exec -it ubuntu-sleeper -- date -s '19 APR 2012 11:14:00'`
+`kubectl -n elastic-stack exec -it app cat /log/app.log`
+
+###### Check logs
+`kubectl logs app`
+####### live logs
+`kubectl logs -f app`
+####### logs with multiple containers
+`kubectl logs app container`
+
+##### metrics
+###### enable minikube
+`minikube addons enable metrics-server`
+
+###### get node consumption
+`kubectl top node`
