@@ -2,6 +2,8 @@
 `kubectl get all`
 ##### Show all element from all namespace
 `kubectl get {element} --all-namspaces`
+##### Show all element with selector
+`kubectl get {element} --selector app=App1,tier=frontend`
 ##### Show yaml definition of the kubernetes element
 `kubectl get ${element} -o yaml`
 ##### Show detailed information about the kubernetes element
