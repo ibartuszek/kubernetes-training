@@ -89,6 +89,7 @@ kubectl create secret <secret-name> --from-file=app_secret.properties
 
 ###### Run custom command on pod
 `kubectl exec -it ubuntu-sleeper -- date -s '19 APR 2012 11:14:00'`
+`kubectl exec webapp -- cat /log/app.log`
 `kubectl -n elastic-stack exec -it app cat /log/app.log`
 
 ###### Check logs

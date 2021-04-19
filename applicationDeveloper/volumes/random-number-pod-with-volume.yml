@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+    - name: alpine
+      image: alpine
+      # create a random number and store it on linux system in the specified file
+      command: ["/bin/sh", "-c"]
+      args: ["shuf -i 0-100 -n 1>> /opt/number.out;"]
+      # connect the container directory to specified volume
+      volumeMounts:
+        - mountPath: /opt
+          name: data-volume
+  # the volume is created on Node and it will be remained after the pod destruction in the specified directory
+  # not ideal solution in a large system use PV globally and PVCs in the pod definitions
+  volumes:
+    - name: data-volume
+      # works only a single node -> not distributed!
+      hostPath:
+        path: /data
+        type: Directory
+      # provider specific solutions:
+      awsElasticBlockStore:
+        volumeID: volumeId
+        fsType: ext4
+    - name: data-volume
+      persistentVolumeClaim:
+        claimName: myPvc

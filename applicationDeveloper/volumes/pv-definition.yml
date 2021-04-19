@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-vol1
+spec:
+  # it defines how a volume should mounted on hosts
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  # Not recommended on prod env, use provider specific solution like awsElasticBlockStore
+  hostPath:
+    path: /tmp/data
+  persistentVolumeReclaimPolicy: Retain

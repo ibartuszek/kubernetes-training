@@ -1,0 +1,12 @@
+# There 1-to-1 relation between pv and pvc, where the pv storage should be sufficient to claim
+# If there is no available pv pvc remain in a pending state until pv hasn`t been created or pvc deleted
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
