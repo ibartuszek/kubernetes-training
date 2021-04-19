@@ -6,6 +6,8 @@
 `kubectl get {element} --selector app=App1,tier=frontend`
 ##### Show yaml definition of the kubernetes element
 `kubectl get ${element} -o yaml`
+##### Show pods with label
+`kubectl get pods -l name=payroll`
 ##### Show detailed information about the kubernetes element
 `kubectl describe ${element} elementName`
 ##### Create kubernetes element with cli from file

@@ -1,0 +1,43 @@
+# To allow traffic between specified pods only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  # incoming traffic allowed only from api-pod to role=db pod
+  # do not need to define to egress (outcoming traffic),
+  #   because sending response is allowed automatically, if ingress is defined (not calling directly!)
+  - Ingress
+  # outcoming traffic
+  - Egress
+  ingress:
+    - from:
+        # First rule
+        # Within the rule between criteria there is an AND relation
+          # First criteria on the basis of pod labels
+        - podSelector:
+            matchLabels:
+              name: api-pod
+          # Second criteria: on namespace
+          namespaceSelector:
+            matchLabels:
+              name: prod
+        # Second rule
+        # Allow communication from outside of the kubernetes network e.g.: backup server
+        - ipBlock:
+            cidr: 192.168.5.10/32
+      ports:
+        - protocol: TCP
+          port: 3306
+  egress:
+    # e.g.: backup save to outside of the kubernetes network
+    - to:
+        - ipBlock:
+            cidr: 192.168.5.11/32
+      ports:
+        - protocol: TCP
+          port: 80
