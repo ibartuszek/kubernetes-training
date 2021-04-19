@@ -103,4 +103,8 @@ kubectl create secret <secret-name> --from-file=app_secret.properties
 `minikube addons enable metrics-server`
 
 ###### get node consumption
-`kubectl top node`
+`kubectl top node
+
+###### Ingress`
+###### Create ingress definition file
+`kubectl -n ingress-space expose deployment ingress-controller --name ingress --port 80 --target-port 80 type NodePort --dry-run=client -o yaml > ingress-svc.yml `
