@@ -1,0 +1,14 @@
+# Just for representation
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+  labels:
+    app: mysql
+spec:
+  containers:
+    - name: mysql
+      image: mysql
+  # headless service, Stateful set automatically assign these properties
+  subdomain: mysql-h
+  hostname: mysql-pod

@@ -1,0 +1,13 @@
+# example headless service. Its purpose to read from all pods (master and slave) but write only on master.
+apiVersion: v1
+kind: Service
+metadata:
+  # specified service name at the Stateful set
+  name: mysql-h
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+  # The only difference from a normal ClusterIp
+  clusterIP: None
