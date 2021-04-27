@@ -6,9 +6,11 @@ spec:
   # it defines how a volume should mounted on hosts
   accessModes:
     - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 1Gi
   # Not recommended on prod env, use provider specific solution like awsElasticBlockStore
   hostPath:
     path: /tmp/data
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
